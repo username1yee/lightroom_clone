@@ -104,6 +104,10 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 #dlw{position:relative}#dlm{position:absolute;right:0;top:calc(100% + 6px);display:flex;flex-direction:column;gap:4px;min-width:160px;padding:6px;background:var(--pn);border:1px solid var(--ln);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:30}
 #dlm button{text-align:left;border:0;background:none;min-height:42px}#dlm button:active{background:var(--ln)}
 .hid{display:none!important}
+#fq{position:absolute;width:56px;height:56px;display:none;touch-action:none;cursor:grab;z-index:4;pointer-events:auto;transform:translate(-50%,-50%);filter:drop-shadow(0 0 2px rgba(0,0,0,.5))}
+#fqdone{display:none;width:auto;padding:0 18px;font-weight:600;background:var(--ac);color:#06121f;border-color:var(--ac);white-space:nowrap}
+header.fqm>*:not(#fqdone):not(span){display:none!important}
+header.fqm #fqdone{display:inline-flex}
 #ov{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:9}
 @media(min-width:800px){body{flex-direction:row;flex-wrap:wrap}header{width:100%}#wrap{flex:1 1 60%;height:calc(100% - 56px)}#side{flex:0 0 380px;display:flex;flex-direction:column;height:calc(100% - 56px)}#panel,#wfwin{flex:1;height:auto}}
 #side{display:contents}@media(min-width:800px){#side{display:flex}}
@@ -155,7 +159,7 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 <button id="undo" class="ib" aria-label="復原" disabled><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg></button><button id="redo" class="ib" aria-label="重做" disabled><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg></button>
 <span style="flex:1"></span>
 <button id="rst" class="ib" aria-label="全部重設" title="全部重設"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.7-6.4L3 8"/><path d="M3 3v5h5"/></svg></button><button id="cmp" class="ib" aria-label="按住看原圖" title="按住看原圖"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/><path d="M6.5 9h2M6.5 12h2" opacity=".6"/></svg></button><div id="dlw"><button id="dlb" class="ib" aria-label="下載"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg></button></div>
-<select id="fmt" class="hid"><option value="png">PNG</option><option value="jpeg">JPEG 92</option></select><button id="exp" class="hid"></button><button id="dl" class="hid"></button>
+<button id="fqdone" class="ib" aria-label="完成設定">完成設定</button><select id="fmt" class="hid"><option value="png">PNG</option><option value="jpeg">JPEG 92</option></select><button id="exp" class="hid"></button><button id="dl" class="hid"></button>
 </header>
 <div id="wrap"><div id="empty"><button class="dz" id="dzp">新增照片</button><span class="dzor">或</span><button class="dz" id="dzz">打開專案</button><span class="dzhint">電腦版也可以直接把檔案拖進來</span></div>
 <div id="stage" class="hid"><canvas id="gl"></canvas><svg id="o" xmlns="http://www.w3.org/2000/svg"></svg></div>
@@ -169,8 +173,7 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 <div id="p-hsl" class="hid"><div class="dots" id="dots"></div><div class="dots hid" id="cdots"></div></div>
 <div id="p-ef" class="hid"><div id="mods"></div>
 <div class="bar"><button id="addmod" class="pri">＋ 新增效果</button></div></div>
-<div id="p-crop" class="hid"><p class="note">拖曳角落調整範圍，拖曳框內移動位置。傾斜時範圍會自動縮小，避免露出空白。</p>
-<div class="pgrid" id="crat" style="gap:6px"></div>
+<div id="p-crop" class="hid"><div class="pgrid" id="crat" style="gap:6px"></div>
 <div class="row"><div class="t"><span>傾斜</span><span class="v" id="ctv">0°</span></div><input type="range" id="ctilt" min="-450" max="450" value="0"></div>
 <div class="bar"><button id="cswap">橫直互換</button><button id="crst">重設裁切</button></div></div>
 <div id="p-fn" class="hid">
@@ -178,12 +181,12 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 <label class="sw"><span>顯示色階分布圖</span><input type="checkbox" id="fh"></label>
 <div class="hid" id="fsbox"><label class="sw"><span>全螢幕模式</span><input type="checkbox" id="fsw"></label><p class="note" id="fsn" style="margin-top:-4px"></p></div>
 
-<div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--ln)"><p class="note"><b>色彩調色盤</b>　拖曳色輪選基準色，依配色規則產生 5 個顏色</p>
+<div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--ln)"><p class="note"><b>色彩調色盤</b></p>
 <select id="phm" style="width:100%"><option value="analogous">類似色 Analogous</option><option value="complementary">互補色 Complementary</option><option value="triad">三等分 Triad</option><option value="split">分裂互補 Split complementary</option><option value="tetrad">四角 Tetradic</option><option value="mono">單色 Monochromatic</option></select>
 <div id="pw"></div><div id="prd" class="note" style="text-align:center;margin:0 0 6px"></div>
 <div class="pgrid" id="pgen"></div>
 <div class="bar"><button id="padd" class="pri">全部加入調色盤</button></div>
-<p class="note" style="margin-top:14px"><b>我的調色盤</b>　（會一併存進專案）</p><div class="pgrid" id="pcus"></div><p class="note" id="pcn"></p>
+<p class="note" style="margin-top:14px"><b>我的調色盤</b></p><div class="pgrid" id="pcus"></div><p class="note" id="pcn"></p>
 <div class="bar"><button id="pbase">設為基準色</button><button id="pdel">刪除</button><button id="pclr">清空</button></div></div></div>
 <div id="p-mask" class="hid">
 <p class="note sh" style="margin-top:0"><b>新建遮罩</b></p>
@@ -270,8 +273,8 @@ precision highp float;in vec2 uv;out vec4 o;uniform sampler2D t,dm,cc;uniform ve
 float zf(vec2 q){float z=dot(texture(dm,vec2(q.x,1.-q.y)).rgb,vec3(.3333));return dp.w>.5?z:1.-z;}
 float rc(float z){return smoothstep(0.,.5,max(abs(z-dp.x)-dp.y*.4,0.));}
 void main(){
-if(md==0){float Rs=max(dp.z*.4,3.),zp=zf(uv),a=rc(zp);
-for(int i=0;i<32;i++){float fi=float(i)+.5,r=sqrt(fi/32.),an=fi*2.39996323,zq=zf(uv+vec2(cos(an),sin(an))*r*Rs/res);if(zq<zp-.03)a=max(a,rc(zq)*(1.-r));}
+if(md==0){float Rs=max(dp.z*.9,3.),zp=zf(uv),a=rc(zp);
+for(int i=0;i<48;i++){float fi=float(i)+.5,r=sqrt(fi/48.),an=fi*2.39996323,zq=zf(uv+vec2(cos(an),sin(an))*r*Rs/res);if(zq<zp-.03)a=max(a,rc(zq)*(1.-r*r));}
 o=vec4(a,zp,0.,1.);return;}
 vec4 cp=texture(cc,uv);float Rp=cp.r*dp.z;vec3 c0=texture(t,uv).rgb;
 if(Rp<.8){o=vec4(c0,1.);return;}
@@ -475,7 +478,7 @@ let o=`<path d="M0 0H${ovW}V${ovH}H0Z ${poly}" fill="#000" fill-opacity=".55" fi
 const lp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
 [1/3,2/3].forEach(t=>{const a=lp(cs[0],cs[1],t),b=lp(cs[3],cs[2],t),c=lp(cs[0],cs[3],t),d=lp(cs[1],cs[2],t);o+=`<path d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}M${c[0]} ${c[1]}L${d[0]} ${d[1]}" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>`});
 cs.forEach(c=>o+=`<circle cx="${c[0]}" cy="${c[1]}" r="9" fill="#fff" stroke="#000" stroke-opacity=".6" stroke-width="1.5"/>`);ov.innerHTML=o}
-function drawOv(){ov.innerHTML='';if(bmp&&tab=='crop'){drawCropOv();return}if(bmp&&tab=='ef'){caOv();return}if(bmp&&tab=='color'){const c=sub=='hsl'&&band>=8&&cL().hx[band-8];if(c){const q=fromSrc({x:c.ex,y:c.ey}),kk=1/(zm.z||1);ov.innerHTML=`<g opacity="${c.lock?.4:1}" transform="translate(${(q.x*ovW).toFixed(2)} ${(q.y*ovH).toFixed(2)}) scale(${(1.3*kk).toFixed(4)}) translate(-2 -22)" style="filter:drop-shadow(0 0 1.5px rgba(0,0,0,.6))"><path d="m2 22 1-1h3l9-9M3 21v-3l9-9m3-3 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z" fill="rgba(255,255,255,.3)" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="2" cy="22" r="1.6" fill="#fff"/></g>`}return}if(!bmp||tab!='mask'||cur==0)return;const m=ac();if(m.type=='color'||m.type=='lum'||m.type=='depth'){const q=fromSrc({x:m.ex,y:m.ey}),kk=1/(zm.z||1);ov.innerHTML=`<g transform="translate(${(q.x*ovW).toFixed(2)} ${(q.y*ovH).toFixed(2)}) scale(${(1.3*kk).toFixed(4)}) translate(-2 -22)" style="filter:drop-shadow(0 0 1.5px rgba(0,0,0,.6))"><path d="m2 22 1-1h3l9-9M3 21v-3l9-9m3-3 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z" fill="rgba(255,255,255,.3)" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="2" cy="22" r="1.6" fill="#fff"/></g>`;return}if(m.type!='linear'&&m.type!='radial')return;const W=ovW,H=ovH,h=hnd(m);let d='';
+function drawOv(){ov.innerHTML='';if(fq&&fq.style.display!='none'&&!focusPick&&!fqCA)fqEnd();if(bmp&&tab=='crop'){drawCropOv();return}if(bmp&&tab=='ef'){caOv();return}if(bmp&&tab=='color'){const c=sub=='hsl'&&band>=8&&cL().hx[band-8];if(c){const q=fromSrc({x:c.ex,y:c.ey}),kk=1/(zm.z||1);ov.innerHTML=`<g opacity="${c.lock?.4:1}" transform="translate(${(q.x*ovW).toFixed(2)} ${(q.y*ovH).toFixed(2)}) scale(${(1.3*kk).toFixed(4)}) translate(-2 -22)" style="filter:drop-shadow(0 0 1.5px rgba(0,0,0,.6))"><path d="m2 22 1-1h3l9-9M3 21v-3l9-9m3-3 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z" fill="rgba(255,255,255,.3)" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="2" cy="22" r="1.6" fill="#fff"/></g>`}return}if(!bmp||tab!='mask'||cur==0)return;const m=ac();if(m.type=='color'||m.type=='lum'||m.type=='depth'){const q=fromSrc({x:m.ex,y:m.ey}),kk=1/(zm.z||1);ov.innerHTML=`<g transform="translate(${(q.x*ovW).toFixed(2)} ${(q.y*ovH).toFixed(2)}) scale(${(1.3*kk).toFixed(4)}) translate(-2 -22)" style="filter:drop-shadow(0 0 1.5px rgba(0,0,0,.6))"><path d="m2 22 1-1h3l9-9M3 21v-3l9-9m3-3 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z" fill="rgba(255,255,255,.3)" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="2" cy="22" r="1.6" fill="#fff"/></g>`;return}if(m.type!='linear'&&m.type!='radial')return;const W=ovW,H=ovH,h=hnd(m);let d='';
 if(m.type=='linear'){const a=fromSrc({x:m.x1,y:m.y1}),b=fromSrc({x:m.x2,y:m.y2});d=`M${a.x*W} ${a.y*H}L${b.x*W} ${b.y*H}`}
 else{const g=radG(m);for(let i=0;i<=96;i++){const t=i/96*Math.PI*2,q=fromSrc(g.P(Math.cos(t),Math.sin(t)));d+=(i?'L':'M')+(q.x*W).toFixed(2)+' '+(q.y*H).toFixed(2)}}
 const k=1/(zm.z||1);let o='',sh='';
@@ -503,7 +506,7 @@ if(t>.02)Object.assign(crop,mkc(t))}
 drawOv();render()}
 stage.onpointerdown=e=>{if(!bmp||pts.size>0)return;const q0=pt(e),q=toSrc(q0),q0u=ptr(e),qu=toSrc(q0u);if(tab=='crop'&&!wbPick&&!maskPick&&!focusPick){cropDown(e,q0);return}if(wbPick){const w=oc.width,h=oc.height,x=Math.round(q.x*(w-1)),y=Math.round(q.y*(h-1));const c=avg(x-3,y-3,x+3,y+3);setWB(...solveWB(...c));wbOff();return}
 if(maskPick){samplePick(q);return}
-if(focusPick){pickFocus(q);return}
+if(focusPick||fqCA){fqApply(q);return}
 if(tab=='ef'){const h=caHit(q0u);if(h){stage.setPointerCapture(e.pointerId);drag={k:'ca',c:h,ox:h.cx-qu.x,oy:h.cy-qu.y}}return}
 if(tab=='color'&&sub=='hsl'&&band>=8){const c=cL().hx[band-8];if(c&&!c.lock&&eyeHit(q0,c)){stage.setPointerCapture(e.pointerId);drag={k:'hxeye',c,ox:c.ex-q.x,oy:c.ey-q.y}}return}if(tab!='mask')return;stage.setPointerCapture(e.pointerId);
 if(pend){let m;if(pendSub&&cur>0){m=mkComp(pend,maskMode);cL().extra.push(m);cL().ci=cL().extra.length}else{m=mk('遮罩 '+L.length);m.type=pend;L.push(m);cur=L.length-1}m.x1=m.x2=qu.x;m.y1=m.y2=qu.y;if(pend=='radial'){m.x2=m.y2=.01}if(pend=='linear')m.feather=100;pend=null;$('#hint').style.display='none';
@@ -646,7 +649,7 @@ let pw=null;
 function sw_(par,list,sel,fn){par.innerHTML='';list.forEach((c,i)=>{const b=document.createElement('button');b.style.background=c;b.setAttribute('aria-label',c);b.title=c;if(i===sel)b.classList.add('on');b.onclick=()=>fn(c,i);par.appendChild(b)})}
 function addPal(a){a.forEach(c=>{if(!pal.cols.includes(c)&&pal.cols.length<30)pal.cols.push(c)});palRender()}
 function palRender(){sw_($('#pgen'),palGen(),-1,c=>addPal([c]));sw_($('#pcus'),pal.cols,pal.sel,(c,i)=>{pal.sel=i;palRender()});
-$('#pcn').textContent=pal.cols.length?(pal.sel>=0?'已選取 '+pal.cols[pal.sel].toUpperCase():'點選顏色後，可設為基準色或刪除'):'調色盤是空的。調整基準色後，按「全部加入調色盤」，或點上方單一顏色加入。';
+$('#pcn').textContent=pal.sel>=0&&pal.cols[pal.sel]?'已選取 '+pal.cols[pal.sel].toUpperCase():'';
 $('#prd').textContent='基準色 '+wcol(pal.h,pal.s).toUpperCase();pw&&pw.update();
 const box=$('#cgpl');if(!pal.cols.length)box.innerHTML='<span class="note">調色盤是空的，請到「功能」分頁建立。</span>';
 else sw_(box,pal.cols,-1,c=>{const[h,sa]=hexWheel(c),g=cL().cg[cgi];g[0]=Math.round(h)%360;g[1]=Math.round(sa);box.classList.add('hid');syncAll();render();commit()})}
@@ -704,7 +707,7 @@ function go(d){const n=hi+d;if(n<0||n>=hist.length)return;hi=n;L=JSON.parse(hist
 $('#undo').onclick=()=>go(-1);$('#redo').onclick=()=>go(1);
 $('#rst').onclick=()=>{uiConfirm('清除全部調整與遮罩？',{title:'全部重設',ok:'清除'}).then(y=>{if(y){L=[mk('全圖')];cur=0;commit();chips();syncAll();rebuildBrush()}})};
 // 按鈕
-document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{const pv=tab;tab=b.dataset.t;$('#side').classList.remove('col');if(tab=='crop'){zm.z=1;zm.x=zm.y=0}zApply();document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x==b));
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{const pv=tab;tab=b.dataset.t;focusPick=null;fqCA=null;$('#side').classList.remove('col');if(tab=='crop'){zm.z=1;zm.x=zm.y=0}zApply();document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x==b));
 fadeSwap(()=>{wfClose();['light','mask','ef','fn','crop'].forEach(t=>$('#p-'+t).classList.toggle('hid',t!=tab));panelsApply();$('#panel').scrollTop=0},pv==tab&&!$('#side').classList.contains('wf'));render()});
 
 let sub='base';
@@ -807,12 +810,12 @@ function glareBody(m,b){b.innerHTML='';const reg=[],R=(id,l,mi,ma,def,key,extra,
 const kd=document.createElement('div');kd.className='sw';kd.innerHTML='<span>光效種類</span><select><option value="0">霧光</option><option value="1">星芒</option></select>';
 const ks=kd.querySelector('select');ks.value=m.kind?1:0;ks.onchange=e=>{m.kind=+e.target.value;modRender();render()};b.appendChild(kd);
 R('th','門檻',0,100,80,'th');R('sm','平滑度',0,100,30,'sm');R('a','強度',0,100,50,'amount');
-let sat;const tint=()=>sat&&sat.i.style.setProperty('--hc',`hsl(${m.hh} 100% 50%)`);R('h','色相',0,360,40,'hh',tint,'rb');sat=R('s','飽和度（0=保留原色）',0,100,0,'hs',null,'sg');tint();
-m.kind?R('z','大小（星芒長度）',0,100,50,'ssize'):R('z','大小（光暈範圍）',0,100,50,'size');
-if(m.kind){R('n','星芒數量（每條雙向）',1,8,2,'cnt');R('g','星芒角度',0,180,0,'ang');R('f','淡出',0,100,50,'fade')}
+let sat;const tint=()=>sat&&sat.i.style.setProperty('--hc',`hsl(${m.hh} 100% 50%)`);R('h','色相',0,360,40,'hh',tint,'rb');sat=R('s','飽和度',0,100,0,'hs',null,'sg');tint();
+m.kind?R('z','大小',0,100,50,'ssize'):R('z','大小',0,100,50,'size');
+if(m.kind){R('n','星芒數量',1,8,2,'cnt');R('g','星芒角度',0,180,0,'ang');R('f','淡出',0,100,50,'fade')}
 const md=document.createElement('div');md.className='sw';md.innerHTML='<span>混合模式</span><select><option value="0">一般</option><option value="1">濾色</option><option value="2">線性加亮</option><option value="3">柔光</option><option value="4">覆蓋</option><option value="5">正片疊底</option></select>';
 const se=md.querySelector('select');se.value=m.mode;se.onchange=e=>{m.mode=+e.target.value;render()};b.appendChild(md)}
-function caList(){return mods.filter(m=>m.type=='ca'&&m.on&&m.open)}
+function caList(){return []}
 function caHit(q){const z=zm.z||1;let best=null,bd=30;caList().forEach(m=>{const p=fromSrc({x:m.cx,y:m.cy}),d=Math.hypot((q.x-p.x)*ovW*z,(q.y-p.y)*ovH*z);if(d<bd){bd=d;best=m}});return best}
 function caOv(){const k=1/(zm.z||1);let sh='',o='';caList().forEach(m=>{const q=fromSrc({x:m.cx,y:m.cy}),x=q.x*ovW,y=q.y*ovH,a=20*k,r=7*k;
 const ln=(c,w,op)=>`<path d="M${x-a} ${y}H${x+a}M${x} ${y-a}V${y+a}" stroke="${c}" stroke-opacity="${op}" stroke-width="${(w*k).toFixed(3)}" stroke-linecap="round" fill="none"/>`;
@@ -820,23 +823,24 @@ sh+=ln('#000',4.5,.25)+`<circle cx="${x}" cy="${y}" r="${(r+1.5*k).toFixed(3)}" 
 o+=ln('#fff',1.8,.9)+`<circle cx="${x}" cy="${y}" r="${r.toFixed(3)}" fill="#6cb8ff" stroke="#fff" stroke-width="${(2*k).toFixed(3)}"/>`});ov.innerHTML=sh+o}
 function caBody(m,b){b.innerHTML='';const reg=[],R=(id,l,mi,ma,def,key,st)=>slider(b,id,l,mi,ma,def,()=>m[key],v=>{m[key]=v},null,'',1,reg,st);
 const fw=document.createElement('label');fw.className='sw';fw.innerHTML='<span>貼合鏡頭色散</span><input type="checkbox">';const fc=fw.querySelector('input');fc.checked=!!m.fit;fc.onchange=e=>{m.fit=+e.target.checked;render()};b.appendChild(fw);
-const n1=document.createElement('p');n1.className='note';n1.textContent='自動邊緣補全與防裁切補償，消除因色散縮放導致的邊緣黑邊或像素空隙。拖移照片上的十字準心可更改鏡頭畸變中心。';b.appendChild(n1);
+
+const cb=document.createElement('div');cb.className='bar';cb.innerHTML='<button style="flex:1 1 100%">快速設定鏡頭中心</button>';cb.querySelector('button').onclick=()=>fqStart(m,true);b.appendChild(cb);
 R('ca1','色差強度',0,5,1,'amount',.1);R('ca2','畸變曲率',0,.1,.03,'k',.001);R('ca3','邊緣色相光滑度',0,5,0,'blur',1);
 const n2=document.createElement('p');n2.className='note';n2.innerHTML='<b>通道分離比例</b>';b.appendChild(n2);
 R('ca4','紅色通道倍率',.95,1.08,1.015,'red',.001);R('ca5','綠色通道倍率',.95,1.08,1,'green',.001);R('ca6','藍色通道倍率',.95,1.08,.985,'blue',.001);
 const rb=document.createElement('div');rb.className='bar';rb.innerHTML='<button style="flex:1 1 100%">重置色差參數</button>';rb.querySelector('button').onclick=()=>{Object.assign(m,MD.ca());caBody(m,b);drawOv();render()};b.appendChild(rb)}
 function modBody(m,b){if(m.type=='ca')return caBody(m,b);if(m.type=='vig')return vigBody(m,b);if(m.type=='glare')return glareBody(m,b);const has=hasD(m);
-b.innerHTML=`<div class="bar"><label class="btnl">${has?'更換深度圖':'上傳深度圖'}<input type="file" accept="image/*" hidden></label>${has?'<button class="rmd">移除深度圖</button>':''}</div><p class="note">${has?'已載入深度圖（白色=近、黑色=遠）':'請先上傳這個效果專用的深度圖，才能調整。'}</p>`;
+b.innerHTML=`<div class="bar"><label class="btnl">${has?'更換深度圖':'上傳深度圖'}<input type="file" accept="image/*" hidden></label>${has?'<button class="rmd">移除深度圖</button>':''}</div>`;
 b.querySelector('input').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;if(!bmp){uiAlert('請先開啟照片');return}try{await loadDepth(f,m);modRender();render()}catch(err){uiAlert('無法開啟深度圖：'+err.message)}};
 const rm=b.querySelector('.rmd');if(rm)rm.onclick=()=>{delDepth(m);modRender();render()};if(!has)return;
 const reg=[],R=(id,l,mi,ma,def,key,extra,cls)=>slider(b,id,l,mi,ma,def,()=>m[key],v=>{m[key]=v;extra&&extra()},null,cls||'',1,reg);
-const sw=document.createElement('label');sw.className='sw';sw.innerHTML='<span>反轉深度（白色=遠）</span><input type="checkbox">';const ci=sw.querySelector('input');ci.checked=!!m.inv;ci.onchange=e=>{m.inv=+e.target.checked;if(m.type=='dehaze')dhRefresh(m);render()};b.appendChild(sw);
+const sw=document.createElement('label');sw.className='sw';sw.innerHTML='<span>反轉深度</span><input type="checkbox">';const ci=sw.querySelector('input');ci.checked=!!m.inv;ci.onchange=e=>{m.inv=+e.target.checked;if(m.type=='dehaze')dhRefresh(m);render()};b.appendChild(sw);
 if(m.type=='haze'){R('a','霧的濃度',0,100,50,'amount');R('c','深度圖對比',-100,100,0,'con');
 const md=document.createElement('div');md.className='sw';md.innerHTML='<span>混合模式</span><select><option value="0">一般</option><option value="1">濾色</option><option value="2">線性加亮</option><option value="3">柔光</option><option value="4">覆蓋</option><option value="5">正片疊底</option></select>';const se=md.querySelector('select');se.value=m.mode;se.onchange=e=>{m.mode=+e.target.value;render()};b.appendChild(md);
 const pt_=document.createElement('p');pt_.className='note';pt_.innerHTML='<b>霧的顏色</b>';b.appendChild(pt_);
 let sat;const tint=()=>sat&&sat.i.style.setProperty('--hc',`hsl(${m.hh} 100% 50%)`);R('h','色相',0,360,210,'hh',tint,'rb');sat=R('s','飽和度',0,100,22,'hs',null,'sg');R('l','亮度',0,100,82,'hl');tint()}
-else if(m.type=='dof'){const pb=document.createElement('div');pb.className='bar';pb.innerHTML='<button>點選照片設定對焦點</button>';pb.querySelector('button').onclick=()=>{focusPick=m;maskPick=false;wbOff();hint('點擊照片上要對焦的位置')};b.appendChild(pb);
-R('f','對焦位置（近→遠）',0,100,50,'focus');R('r','對焦範圍',0,100,20,'range');R('a','模糊強度',0,100,50,'amount');R('b','散景亮部',0,100,30,'bk')}
+else if(m.type=='dof'){const pb=document.createElement('div');pb.className='bar';pb.innerHTML='<button>快速設定對焦點</button>';pb.querySelector('button').onclick=()=>fqStart(m);b.appendChild(pb);
+R('f','對焦位置',0,100,50,'focus');R('r','對焦範圍',0,100,20,'range');R('a','模糊強度',0,100,50,'amount');R('b','散景亮部',0,100,30,'bk')}
 else{R('a','去朦朧強度',0,100,50,'amount');R('c','深度對比',-100,100,0,'con');R('o','大氣光亮度',-50,50,0,'aoff')}}
 const MD_T=300,MD_TR=`height ${MD_T}ms ease,padding ${MD_T}ms ease,opacity ${MD_T}ms ease`;
 function toggleMod(m,card){m.open^=1;drawOv();card.querySelector('.cv').classList.toggle('op',!!m.open);let b=card.querySelector('.mb');
@@ -866,6 +870,26 @@ $('#mdlx').onclick=efClose;
 $('#mdlok').onclick=()=>{if(!efSel)return;mods.push(newMod(efSel));efClose();modRender();render()};
 function pickFocus(q){const m=focusPick;focusPick=null;hint('');if(!m||!hasD(m))return;const z=depthAt(m,q.x,q.y);m.focus=Math.round((m.inv?z:1-z)*100);modRender();render()}
 // 裁切
+// ---- 快速設定對焦點 ----
+var fq=null,fqCA=null,fqPos={x:.5,y:.5},fqDrag=0,fqOff={x:0,y:0},fqCol=0;
+function fqPlace(){if(!fq||fq.style.display=='none')return;const v=fromSrc(fqPos);fq.style.left=(v.x*100)+'%';fq.style.top=(v.y*100)+'%';fq.style.transform=`translate(-50%,-50%) scale(${1/(zm.z||1)})`}
+function fqApply(src){if(fqCA){fqPos={x:cl(src.x,0,1),y:cl(src.y,0,1)};fqCA.cx=fqPos.x;fqCA.cy=fqPos.y;fqPlace();render();return}const m=focusPick;if(!m||!hasD(m))return;fqPos={x:cl(src.x,0,1),y:cl(src.y,0,1)};const z=depthAt(m,fqPos.x,fqPos.y);m.focus=Math.round((m.inv?z:1-z)*100);fqPlace();render()}
+function fqStart(m,ca){if(!bmp||(!ca&&!hasD(m)))return;if(ca){fqCA=m;focusPick=null}else{fqCA=null;focusPick=m}maskPick=false;wbOff();
+if(!fq){fq=document.createElement('div');fq.id='fq';
+fq.innerHTML='<svg viewBox="0 0 56 56" fill="none" stroke-linecap="round"><g stroke="#000" stroke-opacity=".4" stroke-width="4.5"><circle cx="28" cy="28" r="14"/><path d="M28 4V15M28 41V52M4 28H15M41 28H52"/></g><g stroke="#fff" stroke-width="2"><circle cx="28" cy="28" r="14"/><path d="M28 4V15M28 41V52M4 28H15M41 28H52"/></g><circle cx="28" cy="28" r="2.5" fill="#fff" stroke="none"/></svg>';
+stage.appendChild(fq);
+fq.onpointerdown=e=>{e.stopPropagation();e.preventDefault();fq.setPointerCapture(e.pointerId);fqDrag=1;const u=ptr(e),c=fromSrc(fqPos);fqOff={x:c.x-u.x,y:c.y-u.y}};
+fq.onpointermove=e=>{if(!fqDrag)return;e.stopPropagation();const u=ptr(e);fqApply(toSrc({x:cl(u.x+fqOff.x,0,1),y:cl(u.y+fqOff.y,0,1)}))};
+fq.onpointerup=fq.onpointercancel=e=>{fqDrag=0;e.stopPropagation()};
+$('#fqdone').onclick=()=>fqEnd()}
+fq.style.display='block';document.querySelector('header').classList.add('fqm');
+const sd=$('#side');fqCol=0;
+if(matchMedia('(min-width:800px)').matches){if(!sd.classList.contains('dcol')){sd.classList.add('dcol');fqCol=2}}
+else if(!sd.classList.contains('col')&&!slB){fqCol=1;slideSet([$('#chbar'),$('#tabs'),$('#panel'),$('#wfwin')],true,()=>sd.classList.add('col'))}
+fqApply(ca?{x:m.cx,y:m.cy}:toSrc({x:.5,y:.5}))}
+function fqEnd(){const on=fq&&fq.style.display!='none';focusPick=null;fqCA=null;fqDrag=0;if(fq)fq.style.display='none';document.querySelector('header').classList.remove('fqm');hint('');if(!on)return;
+const sd=$('#side');if(fqCol==2)sd.classList.remove('dcol');else if(fqCol==1&&sd.classList.contains('col')&&!slB)slideSet([$('#chbar'),$('#tabs'),$('#panel'),$('#wfwin')],false,()=>sd.classList.remove('col'));
+fqCol=0;modRender();render()}
 const RAT=[['自由',0],['原始',-1],['1:1',1],['4:5',.8],['5:4',1.25],['3:2',1.5],['2:3',2/3],['16:9',16/9],['9:16',9/16]];
 function cropUI(){[...$('#crat').children].forEach((b,i)=>b.classList.toggle('on',i==crop.rk));const t=Math.round(crop.a*1800/Math.PI);$('#ctilt').value=t;$('#ctv').textContent=(t/10).toFixed(1)+'°'}
 function setRatio(r,rk){if(!bmp)return;crop.ratio=r;crop.rk=rk;if(r){crop.cx=iw/2;crop.cy=ih/2;crop.hh=ih/2;crop.hw=crop.hh*r;if(crop.hw>iw/2){crop.hw=iw/2;crop.hh=crop.hw/r}fitCrop()}cropUI();drawOv();render()}
@@ -877,7 +901,7 @@ $('#ctilt').parentElement.ondblclick=()=>{if(!bmp)return;crop.a=0;cropUI();drawO
 $('#cswap').onclick=()=>{if(crop.ratio)setRatio(1/crop.ratio,-1)};$('#crst').onclick=()=>{if(bmp){cropReset();drawOv();render()}};
 // 縮放與全螢幕
 const wrap=$('#wrap'),pts=new Map();let pin=null;
-function zApply(){const lim=Math.max(stage.clientWidth,stage.clientHeight)*zm.z/2;zm.x=cl(zm.x,-lim,lim);zm.y=cl(zm.y,-lim,lim);stage.style.transform=(zm.z==1&&!zm.x&&!zm.y)?'':`translate(${zm.x}px,${zm.y}px) scale(${zm.z})`;$('#zfit').textContent=tab=='crop'?'最大':(Math.round(zm.z*10)/10)+'×';if(tab=='mask'||tab=='ef')drawOv()}
+function zApply(){const lim=Math.max(stage.clientWidth,stage.clientHeight)*zm.z/2;zm.x=cl(zm.x,-lim,lim);zm.y=cl(zm.y,-lim,lim);stage.style.transform=(zm.z==1&&!zm.x&&!zm.y)?'':`translate(${zm.x}px,${zm.y}px) scale(${zm.z})`;$('#zfit').textContent=tab=='crop'?'最大':(Math.round(zm.z*10)/10)+'×';if(tab=='mask'||tab=='ef')drawOv();fqPlace()}
 function zAt(nz,fx,fy){const r=wrap.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;nz=cl(nz,1,8);const k=nz/zm.z;zm.x=(fx-cx)-k*(fx-cx-zm.x);zm.y=(fy-cy)-k*(fy-cy-zm.y);zm.z=nz;if(nz==1){zm.x=zm.y=0}zApply()}
 const zc_=()=>{const r=wrap.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
 $('#zin').onclick=()=>tab=='crop'?cropZoom(1.25):zAt(zm.z*1.5,...zc_());$('#zout').onclick=()=>tab=='crop'?cropZoom(.8):zAt(zm.z/1.5,...zc_());$('#zfit').onclick=()=>{if(tab=='crop'){if(bmp){crop.hw*=20;crop.hh*=20;fitCrop();cropUI();drawOv();render()}}else zAt(1,...zc_())};
