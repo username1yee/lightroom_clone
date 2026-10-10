@@ -117,15 +117,47 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 .ddm.on{opacity:1;transform:none}
 .ddm .ddi{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 12px;border:0;border-radius:8px;background:none;text-align:left;white-space:nowrap}
 .ddm .ddi:active{background:var(--ln)}.ddm .ddi.sel{color:var(--ac);font-weight:600}.ddm .ddi.sel::after{content:'✓'}
+
+@media(min-width:800px){
+#side{position:relative;margin-right:0;transition:margin-right .3s ease}
+#side.dcol{margin-right:-380px}
+#side>*:not(#grip){transition:visibility 0s}
+#side.dcol>*:not(#grip){visibility:hidden;transition:visibility 0s .3s}
+#side #grip{position:absolute;left:-24px;top:50%;transform:translateY(-50%);width:24px;height:72px;min-height:0;padding:0;border:1px solid var(--ln);border-right:0;border-radius:10px 0 0 10px;background:var(--pn);z-index:6;cursor:pointer}
+#side #grip b{transform:rotate(-45deg);margin-top:0;margin-left:-3px}
+#side.dcol #grip b{transform:rotate(135deg);margin-top:0;margin-left:3px}
+}
+#dlb{background:var(--ac);color:#06121f;border-color:var(--ac)}#dlb:active{background:var(--ac);filter:brightness(.82)}
+#dlg,#wrn{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}#dlg.on,#wrn.on{opacity:1;visibility:visible}
+#dlgc,#wrnc{width:min(420px,100%);max-height:min(100%,calc(100dvh - 32px));display:flex;flex-direction:column;background:var(--pn);border:1px solid var(--ln);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);overflow:hidden}
+#dlgh,#wrnh{display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 16px;border-bottom:1px solid var(--ln);flex:none}#dlgh b,#wrnh b{font-size:16px}
+#dlgx,#wrnx{width:40px;height:40px;min-height:0;padding:0;border:0;border-radius:50%;background:none;font-size:20px;line-height:1}
+#dlgl,#wrnl{padding:14px 16px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;flex:1 1 auto;min-height:0;overscroll-behavior:contain}
+#dlgf,#wrnf{display:flex;justify-content:flex-end;padding:10px 12px;border-top:1px solid var(--ln);flex:none}#dlgf button,#wrnf button{min-width:96px}
+.dlr{display:flex;flex-direction:column;gap:6px}.dlr>span{color:var(--mu);font-size:13px}.dlr .ddb{width:100%;min-height:44px}
+#dlname{width:100%;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit}#dlname:focus{outline:none;border-color:var(--ac)}
+#empty{display:flex;flex-direction:column;align-items:center;gap:12px;width:min(320px,86%);padding:0}
+.dz{width:100%;min-height:96px;border:2px dashed #5a5a62;border-radius:14px;background:none;color:var(--tx);font-size:16px;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.dz:hover,.dz:active,#wrap.dragover .dz{border-color:var(--ac);color:var(--ac);background:rgba(108,184,255,.06)}
+.dzor{color:var(--mu)}.dzhint{color:var(--mu);font-size:12px;margin-top:4px}@media(pointer:coarse){.dzhint{display:none}}
+#wrap.dragover{outline:2px dashed var(--ac);outline-offset:-6px}
+#ldw{position:relative}#ldm{position:absolute;left:0;top:calc(100% + 6px);display:flex;flex-direction:column;gap:4px;min-width:160px;padding:6px;background:var(--pn);border:1px solid var(--ln);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:30}#ldm button{text-align:left;border:0;background:none;min-height:42px;white-space:nowrap}#ldm button:active{background:var(--ln)}
+#wrnf{gap:8px}#wrnl p{margin:0;line-height:1.6}
+.sw input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;position:relative;width:52px;height:30px;margin:0;border-radius:15px;background:#2f2f33;cursor:pointer;transition:background .28s ease}
+.sw input[type=checkbox]::before{content:'';position:absolute;left:3px;top:3px;box-sizing:border-box;width:24px;height:24px;border-radius:50%;border:3px solid #d2d2d6;background:transparent;transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .28s ease,background .28s ease}
+.sw input[type=checkbox]:checked{background:#6ea8ff;background:var(--ac)}
+.sw input[type=checkbox]:checked::before{transform:translateX(22px);border-color:#1e1e20;background:#1e1e20}
+.sw input[type=checkbox]:disabled{opacity:.4;cursor:default}
+.sw input[type=checkbox]:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 </style></head><body>
 <header>
-<label id="load" class="ib" aria-label="開啟照片"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1H7.5a2 2 0 0 0-1.9 1.4L3 18z"/><path d="M3 18l2.6-7.6A2 2 0 0 1 7.5 9H22l-2.6 8.2a2 2 0 0 1-1.9 1.4H3z"/></svg><input id="file" type="file" accept="image/*" hidden></label>
+<div id="ldw" style="flex:none"><button id="load" class="ib" aria-label="開啟" aria-haspopup="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1H7.5a2 2 0 0 0-1.9 1.4L3 18z"/><path d="M3 18l2.6-7.6A2 2 0 0 1 7.5 9H22l-2.6 8.2a2 2 0 0 1-1.9 1.4H3z"/></svg></button><div id="ldm" class="hid"><button data-ld="photo">新增照片</button><button data-ld="proj">開啟專案</button></div></div><input id="file" type="file" accept="image/*" hidden><input id="jf" type="file" accept=".zip,.json,application/zip,application/json" hidden>
 <button id="undo" class="ib" aria-label="復原" disabled><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg></button><button id="redo" class="ib" aria-label="重做" disabled><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg></button>
 <span style="flex:1"></span>
-<div id="dlw"><button id="dlb" class="ib" aria-label="下載"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg></button><div id="dlm" class="hid"><button data-dl="png">下載 PNG</button><button data-dl="jpeg">下載 JPG</button><button data-dl="json">下載設定檔</button></div></div>
+<button id="rst" class="ib" aria-label="全部重設" title="全部重設"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.7-6.4L3 8"/><path d="M3 3v5h5"/></svg></button><button id="cmp" class="ib" aria-label="按住看原圖" title="按住看原圖"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/><path d="M6.5 9h2M6.5 12h2" opacity=".6"/></svg></button><div id="dlw"><button id="dlb" class="ib" aria-label="下載"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg></button></div>
 <select id="fmt" class="hid"><option value="png">PNG</option><option value="jpeg">JPEG 92</option></select><button id="exp" class="hid"></button><button id="dl" class="hid"></button>
 </header>
-<div id="wrap"><div id="empty">開啟一張照片開始修圖<br>設定可用「下載設定」存成 JSON，之後再上傳套用</div>
+<div id="wrap"><div id="empty"><button class="dz" id="dzp">新增照片</button><span class="dzor">或</span><button class="dz" id="dzz">打開專案</button><span class="dzhint">電腦版也可以直接把檔案拖進來</span></div>
 <div id="stage" class="hid"><canvas id="gl"></canvas><svg id="o" xmlns="http://www.w3.org/2000/svg"></svg></div>
 <canvas id="hist" width="110" height="40"></canvas><div id="zc"><button id="zin" aria-label="放大">＋</button><button id="zout" aria-label="縮小">－</button><button id="zfit" aria-label="符合畫面">1×</button></div><div id="hint">在照片上拖曳建立遮罩</div></div>
 <div id="side"><button id="grip" aria-label="收合或展開調整面板"><b></b></button>
@@ -142,16 +174,16 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 <div class="row"><div class="t"><span>傾斜</span><span class="v" id="ctv">0°</span></div><input type="range" id="ctilt" min="-450" max="450" value="0"></div>
 <div class="bar"><button id="cswap">橫直互換</button><button id="crst">重設裁切</button></div></div>
 <div id="p-fn" class="hid">
-<div class="bar"><button id="cmp">按住看原圖</button><button id="rst">全部重設</button><label class="btnl">上傳設定<input id="jf" type="file" accept=".json,application/json" hidden></label></div>
-<label class="sw"><span>顯示色階分布圖</span><input type="checkbox" id="fh" checked></label>
-<label class="sw"><span>全螢幕模式</span><input type="checkbox" id="fsw"></label><p class="note" id="fsn" style="margin-top:-4px"></p>
+
+<label class="sw"><span>顯示色階分布圖</span><input type="checkbox" id="fh"></label>
+<div class="hid" id="fsbox"><label class="sw"><span>全螢幕模式</span><input type="checkbox" id="fsw"></label><p class="note" id="fsn" style="margin-top:-4px"></p></div>
 
 <div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--ln)"><p class="note"><b>色彩調色盤</b>　拖曳色輪選基準色，依配色規則產生 5 個顏色</p>
 <select id="phm" style="width:100%"><option value="analogous">類似色 Analogous</option><option value="complementary">互補色 Complementary</option><option value="triad">三等分 Triad</option><option value="split">分裂互補 Split complementary</option><option value="tetrad">四角 Tetradic</option><option value="mono">單色 Monochromatic</option></select>
 <div id="pw"></div><div id="prd" class="note" style="text-align:center;margin:0 0 6px"></div>
 <div class="pgrid" id="pgen"></div>
 <div class="bar"><button id="padd" class="pri">全部加入調色盤</button></div>
-<p class="note" style="margin-top:14px"><b>我的調色盤</b>　（會一併存進設定檔）</p><div class="pgrid" id="pcus"></div><p class="note" id="pcn"></p>
+<p class="note" style="margin-top:14px"><b>我的調色盤</b>　（會一併存進專案）</p><div class="pgrid" id="pcus"></div><p class="note" id="pcn"></p>
 <div class="bar"><button id="pbase">設為基準色</button><button id="pdel">刪除</button><button id="pclr">清空</button></div></div></div>
 <div id="p-mask" class="hid">
 <p class="note sh" style="margin-top:0"><b>新建遮罩</b></p>
@@ -160,7 +192,7 @@ input[type=color]{width:46px;height:34px;padding:0;border:1px solid var(--ln);ba
 <div id="mgrp" class="hid"><p class="note sh"><b>同圖層遮罩群組</b></p><div class="bar" id="mcomp"></div></div>
 <div id="mctl" class="hid"><p class="note sh"><b>遮罩動作</b></p><div class="bar"><button id="minv" style="flex:1 1 100%">翻轉區域</button><label id="mdrep" class="btnl hid" style="flex:1 1 100%">替換深度圖<input id="mdrepf" type="file" accept="image/*" hidden></label></div><div class="bar hid" id="mtool" style="flex-wrap:nowrap"><button id="mbr" class="sq on" title="筆刷" aria-label="筆刷"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4c-5 2-9 6-11 10"/><path d="M9 14c-3 0-4 2-4 4 0 1-1 2-2 2 4 1 8 0 8-4"/></svg></button><button id="mer" class="sq" title="橡皮擦" aria-label="橡皮擦"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 20h12"/><path d="M5 15l9-9a2 2 0 0 1 3 0l2 2a2 2 0 0 1 0 3l-8 8H8l-3-3a1.4 1.4 0 0 1 0-2z"/><path d="M10 10l6 6"/></svg></button></div></div>
 </div></div></div>
-<div id="ov"><div>正在輸出原尺寸照片…</div></div>
+<div id="ov"><div>正在輸出照片…</div></div>
 <script>
 const $=s=>document.querySelector(s),KEY='lr5';
 const VS=`#version 300 es
@@ -319,7 +351,7 @@ gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Ar
 tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);
 [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER].forEach(k=>gl.texParameteri(gl.TEXTURE_2D,k,gl.LINEAR));
 [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T].forEach(k=>gl.texParameteri(gl.TEXTURE_2D,k,gl.CLAMP_TO_EDGE));}
-const TY={linear:0,radial:1,brush:2,color:3,lum:4,image:2,depth:5},ac=()=>{const m=cL();return m.ci>0&&m.extra[m.ci-1]?m.extra[m.ci-1]:m},brush={size:30,erase:0},fx={hist:1,log:0,curve:1},mods=[],DM=new Map(),crop={cx:0,cy:0,hw:1,hh:1,a:0,ratio:0,rk:0},zm={z:1,x:0,y:0};
+const TY={linear:0,radial:1,brush:2,color:3,lum:4,image:2,depth:5},ac=()=>{const m=cL();return m.ci>0&&m.extra[m.ci-1]?m.extra[m.ci-1]:m},brush={size:30,erase:0},fx={hist:0,log:0,curve:1},mods=[],DM=new Map(),crop={cx:0,cy:0,hw:1,hh:1,a:0,ratio:0,rk:0},zm={z:1,x:0,y:0};
 let focusPick=null,mid=1,vw=0,vh=0,cdrag=null;
 const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),cL=()=>L[cur];
 function visList(){return [L[0],...L.slice(1).filter(x=>x.vis)]}
@@ -755,7 +787,7 @@ function dzSync(){}
 const MT={glare:'眩光',haze:'濛霧',dof:'景深模糊',dehaze:'去朦朧',vig:'暈影',ca:'色差'};
 const MD={glare:()=>({kind:0,th:80,sm:30,amount:50,hh:40,hs:0,size:50,ssize:50,mode:1,cnt:2,ang:0,fade:50}),haze:()=>({amount:50,con:0,hh:210,hs:22,hl:82,mode:0}),dof:()=>({amount:50,focus:50,range:20,bk:30}),dehaze:()=>({amount:50,con:0,aoff:0,A:[.82,.86,.9]}),vig:()=>({amount:50,feather:50,radius:60,hh:0,hs:0,hl:0}),ca:()=>({amount:1,k:.03,blur:0,red:1.015,green:1,blue:.985,fit:1,cx:.5,cy:.5})};
 const newMod=t=>({id:mid++,type:t,open:1,on:1,inv:0,...MD[t]()}),hasD=m=>DM.has(m.id);
-function delDepth(m){const d=DM.get(m.id);if(d){gl.deleteTexture(d.tx);DM.delete(m.id)}}
+function delDepth(m){DF.delete(m.id);const d=DM.get(m.id);if(d){gl.deleteTexture(d.tx);DM.delete(m.id)}}
 function clearMods(){mods.forEach(delDepth);mods.length=0}
 const depthAt=(m,x,y)=>{const p=DM.get(m.id);if(!p)return .5;const i=(Math.min(p.h-1,Math.floor(y*p.h))*p.w+Math.min(p.w-1,Math.floor(x*p.w)))*4;return(p.d[i]+p.d[i+1]+p.d[i+2])/765};
 function dhRefresh(m){m.A=[.82,.86,.9];if(!DM.has(m.id)||!oc)return;const od=oc.getContext('2d').getImageData(0,0,oc.width,oc.height).data,a=[];
@@ -766,7 +798,7 @@ if(sc<1){const w=Math.round(b.width*sc),h=Math.round(b.height*sc);b.close();b=aw
 const old=DM.get(m.id),tx=old?old.tx:gl.createTexture();gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,tx);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,b);
 [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER].forEach(k=>gl.texParameteri(gl.TEXTURE_2D,k,gl.LINEAR));[gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T].forEach(k=>gl.texParameteri(gl.TEXTURE_2D,k,gl.CLAMP_TO_EDGE));gl.activeTexture(gl.TEXTURE0);
 const kk=Math.min(1,256/Math.max(b.width,b.height)),w2=Math.max(1,Math.round(b.width*kk)),h2=Math.max(1,Math.round(b.height*kk)),c2=document.createElement('canvas');c2.width=w2;c2.height=h2;
-const x2=c2.getContext('2d',{willReadFrequently:true});x2.drawImage(b,0,0,w2,h2);DM.set(m.id,{tx,w:w2,h:h2,d:x2.getImageData(0,0,w2,h2).data});b.close();if(m.type=='dehaze')dhRefresh(m)}
+const x2=c2.getContext('2d',{willReadFrequently:true});x2.drawImage(b,0,0,w2,h2);DM.set(m.id,{tx,w:w2,h:h2,d:x2.getImageData(0,0,w2,h2).data});b.close();DF.set(m.id,f);if(m.type=='dehaze')dhRefresh(m)}
 function vigBody(m,b){b.innerHTML='';const reg=[],R=(id,l,mi,ma,def,key,extra,cls)=>slider(b,id,l,mi,ma,def,()=>m[key],v=>{m[key]=v;extra&&extra()},null,cls||'',1,reg);
 R('a','量',0,100,50,'amount');R('f','羽化',0,100,50,'feather');R('r','半徑',0,100,60,'radius');
 const pt_=document.createElement('p');pt_.className='note';pt_.innerHTML='<b>暈影顏色</b>';b.appendChild(pt_);
@@ -787,11 +819,11 @@ const ln=(c,w,op)=>`<path d="M${x-a} ${y}H${x+a}M${x} ${y-a}V${y+a}" stroke="${c
 sh+=ln('#000',4.5,.25)+`<circle cx="${x}" cy="${y}" r="${(r+1.5*k).toFixed(3)}" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="${(2*k).toFixed(3)}"/>`;
 o+=ln('#fff',1.8,.9)+`<circle cx="${x}" cy="${y}" r="${r.toFixed(3)}" fill="#6cb8ff" stroke="#fff" stroke-width="${(2*k).toFixed(3)}"/>`});ov.innerHTML=sh+o}
 function caBody(m,b){b.innerHTML='';const reg=[],R=(id,l,mi,ma,def,key,st)=>slider(b,id,l,mi,ma,def,()=>m[key],v=>{m[key]=v},null,'',1,reg,st);
-const fw=document.createElement('label');fw.className='sw';fw.innerHTML='<span>Fit Lens Dispersion（貼合鏡頭色散）</span><input type="checkbox">';const fc=fw.querySelector('input');fc.checked=!!m.fit;fc.onchange=e=>{m.fit=+e.target.checked;render()};b.appendChild(fw);
+const fw=document.createElement('label');fw.className='sw';fw.innerHTML='<span>貼合鏡頭色散</span><input type="checkbox">';const fc=fw.querySelector('input');fc.checked=!!m.fit;fc.onchange=e=>{m.fit=+e.target.checked;render()};b.appendChild(fw);
 const n1=document.createElement('p');n1.className='note';n1.textContent='自動邊緣補全與防裁切補償，消除因色散縮放導致的邊緣黑邊或像素空隙。拖移照片上的十字準心可更改鏡頭畸變中心。';b.appendChild(n1);
-R('ca1','色差強度 (Aberration Intensity)',0,5,1,'amount',.1);R('ca2','畸變曲率 (Radial Factor)',0,.1,.03,'k',.001);R('ca3','邊緣色相光滑度 (Blur/Smooth)',0,5,0,'blur',1);
-const n2=document.createElement('p');n2.className='note';n2.innerHTML='<b>通道分離比例 (Channel Ratios)</b>';b.appendChild(n2);
-R('ca4','紅色通道倍率 (Red)',.95,1.08,1.015,'red',.001);R('ca5','綠色通道倍率 (Green)',.95,1.08,1,'green',.001);R('ca6','藍色通道倍率 (Blue)',.95,1.08,.985,'blue',.001);
+R('ca1','色差強度',0,5,1,'amount',.1);R('ca2','畸變曲率',0,.1,.03,'k',.001);R('ca3','邊緣色相光滑度',0,5,0,'blur',1);
+const n2=document.createElement('p');n2.className='note';n2.innerHTML='<b>通道分離比例</b>';b.appendChild(n2);
+R('ca4','紅色通道倍率',.95,1.08,1.015,'red',.001);R('ca5','綠色通道倍率',.95,1.08,1,'green',.001);R('ca6','藍色通道倍率',.95,1.08,.985,'blue',.001);
 const rb=document.createElement('div');rb.className='bar';rb.innerHTML='<button style="flex:1 1 100%">重置色差參數</button>';rb.querySelector('button').onclick=()=>{Object.assign(m,MD.ca());caBody(m,b);drawOv();render()};b.appendChild(rb)}
 function modBody(m,b){if(m.type=='ca')return caBody(m,b);if(m.type=='vig')return vigBody(m,b);if(m.type=='glare')return glareBody(m,b);const has=hasD(m);
 b.innerHTML=`<div class="bar"><label class="btnl">${has?'更換深度圖':'上傳深度圖'}<input type="file" accept="image/*" hidden></label>${has?'<button class="rmd">移除深度圖</button>':''}</div><p class="note">${has?'已載入深度圖（白色=近、黑色=遠）':'請先上傳這個效果專用的深度圖，才能調整。'}</p>`;
@@ -860,9 +892,6 @@ else if(pts.size==1&&zm.z>1&&canPan()){zm.x+=e.clientX-ox;zm.y+=e.clientY-oy;zAp
 $('#fsw').onchange=async e=>{const el=document.documentElement;try{if(e.target.checked){if(!el.requestFullscreen)throw 0;await el.requestFullscreen()}else if(document.fullscreenElement)await document.exitFullscreen()}catch(err){e.target.checked=false;alert('這個瀏覽器或目前的嵌入環境不允許進入全螢幕。')}};
 document.addEventListener('fullscreenchange',()=>{$('#fsw').checked=!!document.fullscreenElement;setTimeout(fit,50)});
 if(!document.documentElement.requestFullscreen){$('#fsw').disabled=true;$('#fsn').textContent='這個瀏覽器不支援網頁全螢幕（例如 iPhone 的 Safari）。'}
-$('#dlb').onclick=e=>{e.stopPropagation();$('#dlm').classList.toggle('hid')};
-document.addEventListener('click',e=>{if(!e.target.closest('#dlw'))$('#dlm').classList.add('hid')});
-document.querySelectorAll('#dlm button').forEach(b=>b.onclick=()=>{$('#dlm').classList.add('hid');const t=b.dataset.dl;if(t=='json')$('#dl').click();else{$('#fmt').value=t;$('#exp').click()}});
 $('#chtg').onclick=()=>{if(slB)return;const sd=$('#side'),bar=$('#chbar'),h0=bar.offsetHeight,c=!sd.classList.contains('chc');sd.classList.toggle('chc',c);$('#chtg').setAttribute('aria-expanded',!c);
 const h1=bar.offsetHeight;if(!h0||h0==h1)return;slB=true;bar.style.overflow='hidden';bar.style.height=h0+'px';void bar.offsetHeight;bar.style.transition=`height ${SLD}ms ease`;bar.style.height=h1+'px';
 setTimeout(()=>{bar.style.overflow=bar.style.height=bar.style.transition='';slB=false},SLD+30)};
@@ -877,20 +906,100 @@ else{apply();const v=slVis(els),tg=v.map(e=>{const c=getComputedStyle(e);return[
 v.forEach(e=>{e.style.overflow='hidden';e.style.flex='none';e.style.height='0px';e.style.paddingTop=e.style.paddingBottom='0px';e.style.opacity='0'});void document.body.offsetHeight;
 v.forEach((e,i)=>{e.style.transition=tr;e.style.height=tg[i][0]+'px';e.style.paddingTop=tg[i][1];e.style.paddingBottom=tg[i][2];e.style.opacity='1'});
 setTimeout(()=>{v.forEach(slClr);slB=false},SLD+30)}}
-$('#grip').onclick=()=>{if(slB)return;const sd=$('#side'),c=!sd.classList.contains('col');slideSet([$('#chbar'),$('#tabs'),$('#panel'),$('#wfwin')],c,()=>sd.classList.toggle('col',c))};
+$('#grip').onclick=()=>{if(matchMedia('(min-width:800px)').matches){$('#side').classList.toggle('dcol');return}if(slB)return;const sd=$('#side'),c=!sd.classList.contains('col');slideSet([$('#chbar'),$('#tabs'),$('#panel'),$('#wfwin')],c,()=>sd.classList.toggle('col',c))};
 $('#minv').onclick=()=>{ac().inv^=1;syncAll();render();commit()};
 const cmp=$('#cmp');cmp.onpointerdown=()=>{off=1;draw(false)};['pointerup','pointerleave','pointercancel'].forEach(ev=>cmp.addEventListener(ev,()=>{if(off){off=0;draw(false)}}));
 // 載入與匯出
-$('#file').onchange=async e=>{const f=e.target.files[0];if(!f||!gl)return;
+let srcFile=null;const DF=new Map();let savedSig=null;const sig=()=>JSON.stringify([L,mods,crop,pal.cols]);
+async function openPhoto(f){if(!f||!gl)return false;const wasEmpty=!bmp;
 try{const lim=Math.min(4096,gl.getParameter(gl.MAX_TEXTURE_SIZE));let b=await createImageBitmap(f,{imageOrientation:'from-image'});
 const s=Math.min(1,lim/Math.max(b.width,b.height));if(s<1){const w=Math.round(b.width*s),h=Math.round(b.height*s);b.close();b=await createImageBitmap(f,{imageOrientation:'from-image',resizeWidth:w,resizeHeight:h,resizeQuality:'high'})}
 bmp=b;oc=document.createElement('canvas');const os=Math.min(1,512/Math.max(b.width,b.height));oc.width=Math.max(1,Math.round(b.width*os));oc.height=Math.max(1,Math.round(b.height*os));oc.getContext('2d',{willReadFrequently:true}).drawImage(b,0,0,oc.width,oc.height);iw=b.width;ih=b.height;$('#gl').width=iw;$('#gl').height=ih;gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,bmp);
 syncFx();clearMods();modRender();focusPick=null;cropReset();zm.z=1;zm.x=zm.y=0;zApply();vw=0;vh=0;L=[mk('全圖')];cur=0;band=0;pend=null;wbOff();hist=[snap()];hi=0;chips();syncAll();btns();
-$('#empty').classList.add('hid');stage.classList.remove('hid');fit();rebuildBrush()}catch(err){alert('無法開啟這張照片：'+err.message)}e.target.value=''};
-$('#exp').onclick=()=>{if(!bmp)return;const o=$('#ov');o.style.display='flex';const t=$('#fmt').value;
-setTimeout(()=>{draw(true);$('#gl').toBlob(bl=>{const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='lr5_'+Date.now()+(t=='png'?'.png':'.jpg');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);o.style.display='none';draw(false)},'image/'+t,.92)},50)};
-// 設定檔
-$('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'lr5',version:1,layers:L,fx,palette:pal.cols,mods,crop:bmp?{cx:crop.cx/iw,cy:crop.cy/ih,hw:crop.hw/iw,hh:crop.hh/ih,a:crop.a,ratio:crop.ratio,rk:crop.rk}:null},null,1)],{type:'application/json'}));a.download='lr5_settings_'+Date.now()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$('#empty').classList.add('hid');stage.classList.remove('hid');fit();rebuildBrush();srcFile=f;savedSig=sig();if(wasEmpty)panelExpand();return true}catch(err){alert('無法開啟這張照片：'+err.message);return false}}
+$('#file').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(f)await openPhoto(f)};
+let dlName='',dlScale=1;
+// ---- 通用存檔：Android WebView（JS Bridge）與一般瀏覽器（Chrome）共用 ----
+// Android 端需用 addJavascriptInterface(obj, "AndroidDownload") 提供：
+//   start(filename, mime) / chunk(base64) / finish() / cancel()
+const b64Slice=(blob)=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(blob)});
+async function saveBlob(blob,name,mime){
+  const B=window.AndroidDownload;
+  if(B&&typeof B.start=='function'&&typeof B.chunk=='function'&&typeof B.finish=='function'){
+    try{
+      B.start(name,mime||blob.type||'application/octet-stream');
+      const CH=3*131072; // 3 的倍數，base64 分段不會有補位問題
+      for(let o=0;o<blob.size;o+=CH){B.chunk(await b64Slice(blob.slice(o,o+CH)))}
+      const r=B.finish();return r!==false&&r!=='false';
+    }catch(err){try{B.cancel&&B.cancel()}catch(_){}alert('儲存失敗：'+(err&&err.message||err));return false}
+  }
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);return true}
+$('#exp').onclick=()=>{if(!bmp)return;const o=$('#ov');o.style.display='flex';const t=$('#fmt').value,sc=dlScale;
+setTimeout(()=>{draw(true);const g=$('#gl');let cv=g;
+if(sc<1){const tw=Math.max(1,Math.round(g.width*sc)),th=Math.max(1,Math.round(g.height*sc));let sw=g.width,sh=g.height,src=g;
+while(sw>tw){const nw=Math.max(tw,Math.ceil(sw/2)),nh=nw==tw?th:Math.max(th,Math.ceil(sh/2)),c=document.createElement('canvas');c.width=nw;c.height=nh;const x=c.getContext('2d');x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.drawImage(src,0,0,nw,nh);src=c;sw=nw;sh=nh}cv=src}
+cv.toBlob(bl=>{o.style.display='none';draw(false);if(!bl){alert('輸出失敗，可能是圖片太大，請試著降低解析度。');return}saveBlob(bl,(dlName||'New_Project')+(t=='png'?'.png':'.jpg'),'image/'+t).then(ok=>{if(ok)savedSig=sig()})},'image/'+t,.92)},50)};
+
+// 下載對話框
+{const d=document.createElement('div');d.id='dlg';d.innerHTML='<div id="dlgc" role="dialog" aria-modal="true" aria-label="下載"><div id="dlgh"><b>下載</b><button id="dlgx" aria-label="關閉">✕</button></div><div id="dlgl"><div class="dlr"><span>檔名（不含副檔名）</span><input id="dlname" type="text" value="New_Project" maxlength="80" autocomplete="off" spellcheck="false"></div><div class="dlr"><span>檔案格式</span><select id="dlfmt"><option value="png">PNG</option><option value="jpeg">JPEG</option><option value="project">專案（ZIP，含照片與設定）</option></select></div><div class="dlr" id="dlsr"><span>解析度</span><select id="dlres"><option value="1">1.0x</option><option value="0.75">0.75x</option><option value="0.5">0.5x</option><option value="0.25">0.25x</option></select><p class="note" id="dlsz" style="margin:2px 0 0"></p></div></div><div id="dlgf"><button id="dlgo" class="pri">下載</button></div></div>';document.body.appendChild(d);
+const dims=()=>{const sc=+$('#dlres').value,geo=bmp&&!cropIdent(),W=bmp?(geo?Math.max(2,Math.round(crop.hw*2)):iw):0,H=bmp?(geo?Math.max(2,Math.round(crop.hh*2)):ih):0;return bmp?`輸出尺寸：${Math.max(1,Math.round(W*sc))} × ${Math.max(1,Math.round(H*sc))} px`:'開啟照片後才能輸出圖片'};
+const sync=()=>{const p=$('#dlfmt').value=='project';$('#dlsr').classList.toggle('hid',p);$('#dlsz').textContent=dims()};
+$('#dlb').onclick=()=>{sync();$('#dlg').classList.add('on')};
+$('#dlgx').onclick=()=>$('#dlg').classList.remove('on');
+$('#dlfmt').addEventListener('change',sync);$('#dlres').addEventListener('change',sync);
+$('#dlgo').onclick=()=>{const t=$('#dlfmt').value;let n=$('#dlname').value.replace(/[\\\/:*?"<>|\u0000-\u001f]/g,'').trim().replace(/[. ]+$/,'');if(!n)n='New_Project';$('#dlname').value=n;
+if(t!='project'&&!bmp){alert('請先開啟照片');return}
+$('#dlg').classList.remove('on');dlName=n;
+if(t=='project')$('#dl').click();else{dlScale=+$('#dlres').value||1;$('#fmt').value=t;$('#exp').click()}}}
+// 空白畫面按鈕與拖放
+$('#dzp').onclick=()=>$('#file').click();$('#dzz').onclick=()=>$('#jf').click();
+{const w=$('#wrap'),hasF=e=>e.dataTransfer&&[...(e.dataTransfer.types||[])].includes('Files');let dc=0;
+w.addEventListener('dragenter',e=>{if(!hasF(e))return;e.preventDefault();dc++;w.classList.add('dragover')});
+w.addEventListener('dragover',e=>{if(!hasF(e))return;e.preventDefault();e.dataTransfer.dropEffect='copy'});
+w.addEventListener('dragleave',e=>{if(!hasF(e))return;if(--dc<=0){dc=0;w.classList.remove('dragover')}});
+w.addEventListener('drop',async e=>{if(!hasF(e))return;e.preventDefault();dc=0;w.classList.remove('dragover');const f=e.dataTransfer.files[0];if(!f)return;
+const n=(f.name||'').toLowerCase(),isP=/\.(zip|json)$/.test(n)||/zip|json/.test(f.type),isI=(f.type||'').startsWith('image/');
+if(!isP&&!isI){alert('請拖入照片，或 .zip 專案檔');return}
+guard(()=>isP?openProjectFile(f):openPhoto(f))});
+['dragover','drop'].forEach(t=>addEventListener(t,e=>{if(hasF(e))e.preventDefault()}))}
+// 未儲存警告、開啟選單、工具面板
+let wrnGo=null;
+function guard(go){if(!bmp||sig()==savedSig){go();return}wrnGo=go;$('#wrn').classList.add('on')}
+{const d=document.createElement('div');d.id='wrn';d.innerHTML='<div id="wrnc" role="alertdialog" aria-modal="true" aria-label="尚未下載"><div id="wrnh"><b>尚未下載</b><button id="wrnx" aria-label="關閉">✕</button></div><div id="wrnl"><p>目前的照片還沒有下載（照片或專案），開啟新檔案會取代目前的編輯。確定要開啟新檔案嗎？</p></div><div id="wrnf"><button id="wrnno">取消</button><button id="wrnok" class="pri">確定</button></div></div>';document.body.appendChild(d);
+const cl_=()=>{$('#wrn').classList.remove('on');wrnGo=null};$('#wrnx').onclick=$('#wrnno').onclick=cl_;
+$('#wrnok').onclick=()=>{const g=wrnGo;$('#wrn').classList.remove('on');wrnGo=null;g&&g()}}
+$('#load').onclick=e=>{e.stopPropagation();$('#ldm').classList.toggle('hid')};
+document.addEventListener('click',e=>{if(!e.target.closest('#ldw'))$('#ldm').classList.add('hid')});
+document.querySelectorAll('#ldm button').forEach(b=>b.onclick=()=>{$('#ldm').classList.add('hid');const t=b.dataset.ld;guard(()=>$(t=='photo'?'#file':'#jf').click())});
+function panelExpand(){const sd=$('#side');if(matchMedia('(min-width:800px)').matches){sd.classList.remove('dcol','col')}else if(sd.classList.contains('col')){slideSet([$('#chbar'),$('#tabs'),$('#panel'),$('#wfwin')],false,()=>sd.classList.remove('col'))}else sd.classList.remove('dcol')}
+// 專案
+
+// ---- 專案 ZIP（內建，不需外部套件）----
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return b=>{let c=~0;for(let i=0;i<b.length;i++)c=t[(c^b[i])&255]^(c>>>8);return(~c)>>>0}})();
+const extOf=(f,d)=>{const m=(f.name||'').match(/\.([A-Za-z0-9]{1,5})$/);return m?m[1].toLowerCase():({'image/png':'png','image/webp':'webp','image/gif':'gif','image/avif':'avif'}[f.type]||d)};
+const mimeOf=n=>({png:'image/png',webp:'image/webp',gif:'image/gif',avif:'image/avif',bmp:'image/bmp'}[(n.split('.').pop()||'').toLowerCase()]||'image/jpeg');
+function zipMake(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;
+files.forEach(f=>{const nm=enc.encode(f.name),crc=CRC(f.data),sz=f.data.length,h=new DataView(new ArrayBuffer(30)),c=new DataView(new ArrayBuffer(46));
+h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,sz,true);h.setUint32(22,sz,true);h.setUint16(26,nm.length,true);
+c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,sz,true);c.setUint32(24,sz,true);c.setUint16(28,nm.length,true);c.setUint32(42,off,true);
+parts.push(new Uint8Array(h.buffer),nm,f.data);cd.push(new Uint8Array(c.buffer),nm);off+=30+nm.length+sz});
+const cds=cd.reduce((n,a)=>n+a.length,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cds,true);e.setUint32(16,off,true);
+return new Blob([...parts,...cd,new Uint8Array(e.buffer)],{type:'application/zip'})}
+async function zipRead(u){const v=new DataView(u.buffer,u.byteOffset,u.byteLength),dec=new TextDecoder();let e=-1;
+for(let i=u.length-22;i>=Math.max(0,u.length-65600);i--)if(v.getUint32(i,true)==0x06054b50){e=i;break}
+if(e<0)throw new Error('不是有效的 ZIP 檔');const n=v.getUint16(e+10,true);let p=v.getUint32(e+16,true);const out={};
+for(let i=0;i<n;i++){if(v.getUint32(p,true)!=0x02014b50)throw new Error('ZIP 結構損毀');const meth=v.getUint16(p+10,true),cs=v.getUint32(p+20,true),nl=v.getUint16(p+28,true),xl=v.getUint16(p+30,true),cl_=v.getUint16(p+32,true),lo=v.getUint32(p+42,true),name=dec.decode(u.subarray(p+46,p+46+nl));
+const ds=lo+30+v.getUint16(lo+26,true)+v.getUint16(lo+28,true);let d=u.subarray(ds,ds+cs);
+if(meth==8){if(typeof DecompressionStream=='undefined')throw new Error('這個瀏覽器無法解壓縮此 ZIP');d=new Uint8Array(await new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer())}
+else if(meth!=0)throw new Error('不支援的壓縮方式');
+if(!name.endsWith('/'))out[name]=d;p+=46+nl+xl+cl_}return out}
+$('#dl').onclick=async()=>{try{const files=[],md=[];let photo=null;
+if(srcFile){photo='photo.'+extOf(srcFile,'jpg');files.push({name:photo,data:new Uint8Array(await srcFile.arrayBuffer())})}
+for(const m of mods){const o=JSON.parse(JSON.stringify(m)),f=DF.get(m.id);if(f){o.df='depth_'+m.id+'.'+extOf(f,'jpg');files.push({name:o.df,data:new Uint8Array(await f.arrayBuffer())})}md.push(o)}
+const proj={app:'lr5',version:2,photo,photoName:srcFile?srcFile.name:null,layers:L,fx,palette:pal.cols,mods:md,crop:bmp?{cx:crop.cx/iw,cy:crop.cy/ih,hw:crop.hw/iw,hh:crop.hh/ih,a:crop.a,ratio:crop.ratio,rk:crop.rk}:null};
+files.unshift({name:'project.json',data:new TextEncoder().encode(JSON.stringify(proj,null,1))});
+if(await saveBlob(zipMake(files),(dlName||'New_Project')+'.zip','application/zip'))savedSig=sig()}catch(err){alert('無法建立專案：'+err.message)}};
 const num=(v,d,a,b)=>typeof v=='number'&&isFinite(v)?cl(v,a,b):d;
 function fillComp(c,x){c.ch=x.ch?1:0;c.type=TY[x.type]!=null?x.type:'linear';c.hue=num(x.hue,-1,-1,360);c.sat=num(x.sat,0,0,1);c.lum=num(x.lum,-1,-1,1);c.range=num(x.range,50,0,100);c.ex=num(x.ex,.5,0,1);c.ey=num(x.ey,.5,0,1);
 c.strokes=(Array.isArray(x.strokes)?x.strokes:[]).slice(0,400).map(t=>({e:t&&t.e?1:0,r:num(t&&t.r,.03,.001,.3),s:num(t&&t.s,.5,0,1),p:(Array.isArray(t&&t.p)?t.p:[]).slice(0,8000).map(a=>[num(a&&a[0],0,0,1),num(a&&a[1],0,0,1)])}));
@@ -902,16 +1011,23 @@ if(!i){m.hcol=/^#[0-9a-f]{6}$/i.test(x.hcol)?x.hcol:m.hcol;m.hmode=Math.round(nu
 m.hx=(Array.isArray(x.hx)?x.hx:[]).slice(0,8).map(q=>{q=q||{};return{ex:num(q.ex,.5,0,1),ey:num(q.ey,.5,0,1),hue:num(q.hue,0,0,360),col:/^#[0-9a-f]{6}$/i.test(q.col)?q.col:'#808080',lock:q.lock?1:0,v:[0,1,2].map(k=>num(q.v&&q.v[k],0,-100,100))}});m.cgb=num(x.cgb,0,-100,100);if(Array.isArray(x.cgr)){const a=num(x.cgr[0],25,1,90),b=num(x.cgr[1],75,a+4,99);m.cgr=[a,b]}
 if(Array.isArray(x.cg))m.cg=m.cg.map((r,j)=>{const a=x.cg[j]||[];return[num(a[0],0,0,360),num(a[1],0,0,100),num(a[2],0,-100,100),num(a[3],r[3],0,100)]});
 if(i){m.vis=x.vis?1:0;fillComp(m,x);m.amt=num(x.amt,100,0,100);m.ci=0;m.extra=(Array.isArray(x.extra)?x.extra:[]).slice(0,4).map(e=>{const c=mkComp('linear',e&&e.op);fillComp(c,e||{});return c})}return m}
-$('#jf').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
-try{const d=JSON.parse(await f.text());if(!d||d.app!='lr5'||!Array.isArray(d.layers)||!d.layers.length)throw new Error('不是這個程式匯出的設定檔');
+async function openProjectFile(f){if(!f)return;
+try{let d;const dfiles={},pendD=[],buf=new Uint8Array(await f.arrayBuffer());
+if(buf[0]==0x50&&buf[1]==0x4b){const z=await zipRead(buf);if(!z['project.json'])throw new Error('專案裡找不到 project.json');d=JSON.parse(new TextDecoder().decode(z['project.json']));
+if(d&&typeof d.photo=='string'&&z[d.photo]){const ph=new File([z[d.photo]],d.photoName||d.photo,{type:mimeOf(d.photo)});if(!await openPhoto(ph))return}
+for(const k in z)if(k!='project.json'&&k!==d.photo)dfiles[k]=new File([z[k]],k,{type:mimeOf(k)})}
+else d=JSON.parse(new TextDecoder().decode(buf));
+if(!d||d.app!='lr5'||!Array.isArray(d.layers)||!d.layers.length)throw new Error('不是這個程式匯出的專案檔');
 if(Array.isArray(d.palette)){pal.cols=d.palette.filter(c=>typeof c=='string'&&/^#[0-9a-f]{6}$/i.test(c)).map(c=>c.toLowerCase()).filter((c,i,a)=>a.indexOf(c)==i).slice(0,30);pal.sel=-1;palRender()}
 if(Array.isArray(d.mods)){clearMods();d.mods.slice(0,40).forEach(x=>{if(!x||!MD[x.type])return;const m=newMod(x.type),df=MD[x.type]();Object.keys(df).forEach(k=>{if(k!='A')m[k]=num(x[k],df[k],-100,360)});
-m.mode=m.mode===undefined?undefined:Math.round(cl(m.mode,0,5));if(m.mode===undefined)delete m.mode;m.inv=x.inv?1:0;m.on=x.on===0?0:1;mods.push(m)});modRender();if(mods.some(m=>m.type!='vig'&&m.type!='glare'&&m.type!='ca')){hint('效果需要重新上傳深度圖');setTimeout(()=>hint(''),3000)}}
+m.mode=m.mode===undefined?undefined:Math.round(cl(m.mode,0,5));if(m.mode===undefined)delete m.mode;m.inv=x.inv?1:0;m.on=x.on===0?0:1;mods.push(m);if(typeof x.df=='string'&&dfiles[x.df])pendD.push([m,dfiles[x.df]])});for(const[m,fl]of pendD){try{await loadDepth(fl,m)}catch(_){}}modRender();if(mods.some(m=>m.type!='vig'&&m.type!='glare'&&m.type!='ca'&&!hasD(m))){hint('效果需要重新上傳深度圖');setTimeout(()=>hint(''),3000)}}
 if(d.crop&&bmp){const c=d.crop;crop.cx=num(c.cx,.5,0,1)*iw;crop.cy=num(c.cy,.5,0,1)*ih;crop.hw=Math.max(8,num(c.hw,.5,0,1)*iw);crop.hh=Math.max(8,num(c.hh,.5,0,1)*ih);crop.a=num(c.a,0,-.8,.8);crop.ratio=num(c.ratio,0,0,20);crop.rk=Math.round(num(c.rk,0,-1,8));fitCrop();cropUI()}
-if(d.fx){fx.hist=d.fx.hist===0?0:1;syncFx()}L=d.layers.slice(0,200).map(clean);cur=0;band=0;wbOff();commit();chips();syncAll();rebuildBrush()}catch(err){alert('無法載入設定：'+err.message)}};
+if(d.fx){fx.hist=d.fx.hist===0?0:1;syncFx()}L=d.layers.slice(0,200).map(clean);cur=0;band=0;wbOff();commit();chips();syncAll();rebuildBrush();savedSig=sig()}catch(err){alert('無法載入專案：'+err.message)}}
+$('#jf').onchange=async e=>{const f=e.target.files[0];e.target.value='';await openProjectFile(f)};
 // 啟動
 try{localStorage.removeItem(KEY)}catch(e){}
-hist=[snap()];hi=0;chips();syncAll();btns();
+hist=[snap()];hi=0;chips();syncAll();btns();syncFx();
+$('#side').classList.add(matchMedia('(min-width:800px)').matches?'dcol':'col');
 </script><script>
 /* Lightroom-style slider fill: bright segment between 0 (or min) and current value */
 (function(){const upd=i=>{if(i.classList.contains('rb')||i.classList.contains('sg'))return;
